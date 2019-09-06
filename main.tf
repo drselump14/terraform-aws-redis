@@ -27,22 +27,22 @@ resource "random_string" "auth_token" {
 }
 
 module "redis" {
-  source             = "git::https://github.com/cloudposse/terraform-aws-elasticache-redis.git?ref=master"
-  namespace          = var.namespace
-  stage              = var.stage
-  name               = "redis"
-  security_groups    = [aws_security_group.allow_from_vpc.id]
+  source                       = "git::https://github.com/drselump14/terraform-aws-elasticache-redis.git?ref=master"
+  namespace                    = var.namespace
+  stage                        = var.stage
+  name                         = "redis"
+  associate_security_group_ids = [aws_security_group.allow_from_vpc.id]
 
-  auth_token         = random_string.auth_token.result
-  vpc_id             = var.vpc_id
-  subnets            = var.subnets
-  maintenance_window = "wed:03:00-wed:04:00"
-  cluster_size       = var.cluster_size
-  instance_type      = var.instance_type
-  engine_version     = var.engine_version
-  apply_immediately  = true
-  automatic_failover = false
-  availability_zones = var.availability_zones
+  auth_token                   = random_string.auth_token.result
+  vpc_id                       = var.vpc_id
+  subnets                      = var.subnets
+  maintenance_window           = "wed:03:00-wed:04:00"
+  cluster_size                 = var.cluster_size
+  instance_type                = var.instance_type
+  engine_version               = var.engine_version
+  apply_immediately            = true
+  automatic_failover           = false
+  availability_zones           = var.availability_zones
 }
 
 output "auth_token" {
